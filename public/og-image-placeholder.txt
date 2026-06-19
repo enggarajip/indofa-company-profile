@@ -1,0 +1,11 @@
+OG IMAGE PLACEHOLDER
+====================
+
+Buat file og-image.jpg di folder ini (/public/og-image.jpg) dengan spesifikasi:
+- Ukuran: 1200 x 630 piksel
+- Format: JPG
+- Konten: Logo perusahaan + nama perusahaan + tagline di atas background biru brand (#1e3a8a)
+
+File ini digunakan saat website di-share di WhatsApp, Facebook, Twitter/X, LinkedIn.
+
+Tanpa og-image.jpg, pratinjau share tidak akan menampilkan gambar.

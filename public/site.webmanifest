@@ -1,0 +1,26 @@
+{
+  "name":             "PT Indofa Gemilang Konstruksi",
+  "short_name":       "Indofa",
+  "description":      "Perusahaan konstruksi terpercaya dengan pengalaman lebih dari 15 tahun.",
+  "start_url":        "/",
+  "display":          "standalone",
+  "background_color": "#0f1f4a",
+  "theme_color":      "#1e3a8a",
+  "orientation":      "portrait-primary",
+  "lang":             "id",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src":     "/apple-touch-icon.png",
+      "sizes":   "180x180",
+      "type":    "image/png",
+      "purpose": "apple touch icon"
+    }
+  ],
+  "categories": ["business", "construction"],
+  "screenshots": []
+}
