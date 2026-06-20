@@ -48,18 +48,16 @@ export function Navbar() {
               <Building2 size={18} className="text-white" />
             </div>
             <div className="hidden sm:block">
-              <p
-                className={cn(
-                  "font-display font-700 text-sm leading-tight transition-colors",
-                  "text-neutral-900"
-                )}>
+              <p className={cn(
+                "font-display font-700 text-sm leading-tight transition-colors",
+                scrolled || !isHome ? "text-neutral-900" : "text-white"
+              )}>
                 {COMPANY.shortName}
               </p>
-              <p
-                className={cn(
-                  "text-xs transition-colors",
-                  "text-neutral-500"
-                )}>
+              <p className={cn(
+                "text-xs transition-colors",
+                scrolled || !isHome ? "text-neutral-500" : "text-white/70"
+              )}>
                 Konstruksi
               </p>
             </div>
@@ -74,11 +72,13 @@ export function Navbar() {
                   key={href}
                   href={href}
                   className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-500 transition-colors",
-                  active
-                    ? "text-brand-600 bg-brand-50"
-                    : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
-                )}
+                    "px-4 py-2 rounded-lg text-sm font-500 transition-colors",
+                    active
+                      ? "text-brand-600 bg-brand-50"
+                      : scrolled || !isHome
+                        ? "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                  )}
                 >
                   {label}
                 </Link>

@@ -91,7 +91,7 @@ export default function ContactPage() {
                     <Icon size={18} className="text-brand-600" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-neutral-400 font-500 uppercase tracking-wide mb-1">
+                    <p className="text-xs text-neutral-500 font-500 uppercase tracking-wide mb-1">
                       {label}
                     </p>
                     <p className="text-sm text-neutral-800 whitespace-pre-line leading-relaxed">
@@ -168,7 +168,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-5 pt-5 border-t border-neutral-100">
-                  <p className="text-xs text-neutral-400 text-center">
+                  <p className="text-xs text-neutral-500 text-center">
                     Atau kirim email ke{" "}
                     <a
                       href={`mailto:${COMPANY.contact.email}`}

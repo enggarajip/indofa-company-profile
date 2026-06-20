@@ -62,7 +62,8 @@ export function PortfolioClient({ initialProjects }: { initialProjects: Project[
           />
           {search && (
             <button onClick={() => { setSearch(""); setPage(1); }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
+              aria-label="Hapus kata pencarian"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700">
               <X size={15} />
             </button>
           )}

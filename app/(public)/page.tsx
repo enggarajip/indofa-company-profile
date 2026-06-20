@@ -124,23 +124,18 @@ export default async function HomePage() {
                 Selengkapnya <ArrowRight size={16} />
               </Link>
             </div>
-            {/* Company Image */}
+            {/* Visual placeholder */}
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-card-hover">
-                <img
-                  src="/company.jpeg"
-                  alt="PT Indofa Gemilang Konstruksi"
-                  className="w-full h-full object-cover"
-                />
+              <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 overflow-hidden">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white/20">
+                  <div className="text-8xl">🏗️</div>
+                  <p className="text-sm">Ganti dengan foto perusahaan</p>
+                </div>
               </div>
-
+              {/* Floating badge */}
               <div className="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-card-hover p-5 border border-neutral-100">
-                <p className="text-3xl font-display font-800 text-brand-600">
-                  {COMPANY.experience}+
-                </p>
-                <p className="text-sm text-neutral-500 mt-0.5">
-                  Tahun Pengalaman
-                </p>
+                <p className="text-3xl font-display font-800 text-brand-600">{COMPANY.experience}+</p>
+                <p className="text-sm text-neutral-500 mt-0.5">Tahun Pengalaman</p>
               </div>
             </div>
           </div>
@@ -192,7 +187,7 @@ export default async function HomePage() {
           </div>
 
           {projects.length === 0 ? (
-            <div className="text-center py-20 text-neutral-400">
+            <div className="text-center py-20 text-neutral-500">
               <p className="text-4xl mb-4">🏗️</p>
               <p>Proyek akan segera ditampilkan.</p>
             </div>
@@ -252,7 +247,7 @@ export default async function HomePage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-3.5 bg-green-500 text-white font-600 rounded-lg hover:bg-green-600 transition-colors"
             >
-              Hubungi via WhatsApp
+              💬 WhatsApp
             </a>
           </div>
         </div>

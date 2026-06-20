@@ -43,7 +43,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <h3 className="font-display font-600 text-neutral-900 text-base leading-snug group-hover:text-brand-700 transition-colors line-clamp-2 mb-3">
           {project.title}
         </h3>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-400">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
           {project.location && (
             <span className="flex items-center gap-1.5">
               <MapPin size={12} className="text-neutral-300" />

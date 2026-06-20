@@ -105,7 +105,7 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="container-content py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <div className="container-content py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/55">
           <p>© {year} {COMPANY.name}. Hak cipta dilindungi.</p>
           <p>Dibangun dengan Next.js &amp; Supabase</p>
         </div>

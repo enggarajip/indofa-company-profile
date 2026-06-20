@@ -159,7 +159,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {galleryUrls.map((url, i) => (
                     <div
-                      key={url}
+                      key={`${url}-${i}`}
                       className="relative aspect-square rounded-xl overflow-hidden bg-neutral-100 group cursor-pointer"
                     >
                       <Image
@@ -227,7 +227,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               <div className="space-y-4 divide-y divide-neutral-100">
                 {project.location && (
                   <div className="pt-4 first:pt-0">
-                    <p className="text-xs text-neutral-400 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                    <p className="text-xs text-neutral-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
                       <MapPin size={11} /> Lokasi
                     </p>
                     <p className="text-sm font-500 text-neutral-800">{project.location}</p>
@@ -239,7 +239,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                 {project.year && (
                   <div className="pt-4">
-                    <p className="text-xs text-neutral-400 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                    <p className="text-xs text-neutral-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
                       <Calendar size={11} /> Tahun Selesai
                     </p>
                     <p className="text-sm font-500 text-neutral-800">{project.year}</p>
@@ -248,7 +248,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                 {project.duration && (
                   <div className="pt-4">
-                    <p className="text-xs text-neutral-400 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                    <p className="text-xs text-neutral-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
                       <Clock size={11} /> Durasi
                     </p>
                     <p className="text-sm font-500 text-neutral-800">{project.duration}</p>
@@ -256,7 +256,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 )}
 
                 <div className="pt-4">
-                  <p className="text-xs text-neutral-400 uppercase tracking-wide mb-1.5">Kategori</p>
+                  <p className="text-xs text-neutral-500 uppercase tracking-wide mb-1.5">Kategori</p>
                   <span className="inline-block bg-brand-50 text-brand-700 text-xs font-600 px-3 py-1 rounded-full">
                     {project.category}
                   </span>
@@ -277,7 +277,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
               {/* CTA */}
               <div className="pt-2 border-t border-neutral-100">
-                <p className="text-xs text-neutral-400 mb-3 text-center">
+                <p className="text-xs text-neutral-500 mb-3 text-center">
                   Tertarik dengan proyek serupa?
                 </p>
                 <Link href="/contact" className="btn-primary w-full justify-center text-sm py-2.5">
