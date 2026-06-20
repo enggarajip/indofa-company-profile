@@ -3,6 +3,9 @@ import { getProjects } from "@/lib/actions/projects";
 import { FolderOpen, Plus, ArrowRight, MapPin, Calendar } from "lucide-react";
 import type { Project } from "@/types";
 
+// Dashboard admin harus selalu menampilkan data terbaru, bukan hasil cache statis.
+export const dynamic = "force-dynamic";
+
 // ─── Stat Card ────────────────────────────────────────────────────────────────
 
 function StatCard({

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import { generateSlug, isValidYear } from "@/lib/utils";
 import type {
   Project,
@@ -217,7 +218,9 @@ export async function getProjects(
   } = options;
 
   try {
-    const supabase = await createClient();
+    // Read publik — tidak butuh cookies/auth, agar route pemanggil (/, /portfolio,
+    // sitemap.ts) tetap bisa dirender statis alih-alih dipaksa dynamic.
+    const supabase = createPublicClient();
 
     let query = supabase
       .from(TABLE)
@@ -292,7 +295,8 @@ export async function getProjectBySlug(
   }
 
   try {
-    const supabase = await createClient();
+    // Read publik — tidak butuh cookies/auth (RLS sudah izinkan public read)
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
       .from(TABLE)
