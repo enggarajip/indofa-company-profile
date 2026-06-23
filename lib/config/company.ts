@@ -15,12 +15,12 @@ export const COMPANY = {
 
   contact: {
     // Alamat kantor tidak tercantum di company profile — isi setelah data tersedia.
-    address:   "Jakarta, Indonesia",
+    address:   "Tangerang, Indonesia",
     email:     "indofa.gk@gmail.com",
     phone:     "+62 21 5972 9980",
     whatsapp:  "6285780026999",
-    mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d106.82!3d-6.23!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTQnMDAuMCJTIDEwNsKwNDknMTIuMCJF!5e0!3m2!1sid!2sid!4v1234567890",
-    mapsUrl:   "https://maps.google.com/?q=-6.23,106.82",
+    mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4079160521055!2d106.63399777499026!3d-6.20980709377804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9006f91a3bf%3A0xb64c1b4304946e32!2sPT%20Indofa%20Gemilang%20Konstruksi!5e0!3m2!1sen!2sid!4v1782205111664!5m2!1sen!2sid",
+    mapsUrl:   "https://maps.app.goo.gl/zo3cF9AZ1MkdUdrs5",
     operatingHours: "Senin – Jumat: 08.00 – 17.00 WIB\nSabtu: 08.00 – 13.00 WIB",
   },
 
