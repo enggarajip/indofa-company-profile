@@ -24,12 +24,18 @@ const VALUE_EMOJI: Record<string, string> = {
 };
 
 const MILESTONES = [
-  { year: COMPANY.founded,       event: "Perusahaan didirikan di Jakarta dengan tim awal 12 orang." },
-  { year: COMPANY.founded + 2,   event: "Menyelesaikan 10 proyek pertama dan ekspansi ke Jawa Barat." },
-  { year: COMPANY.founded + 5,   event: "Meraih sertifikasi ISO 9001 untuk sistem manajemen mutu konstruksi." },
-  { year: COMPANY.founded + 8,   event: "Ekspansi nasional: hadir di Sumatera, Kalimantan, dan Sulawesi." },
-  { year: COMPANY.founded + 11,  event: "Menyelesaikan proyek ke-150 — jembatan bentang panjang di Kalimantan." },
-  { year: new Date().getFullYear(), event: "Lebih dari 200 proyek selesai, 500+ tenaga ahli aktif." },
+  {
+    year:  COMPANY.founded,
+    event: "Resmi berdiri sebagai PT. Indofa Gemilang Konstruksi melalui Akte Pendirian Perusahaan, setelah sebelumnya beroperasi sebagai CV. Indofa di bidang sipil dan konstruksi.",
+  },
+  {
+    year:  COMPANY.founded + 1,
+    event: "Memperoleh Surat Keputusan (SK) Menteri Hukum dan HAM RI sebagai legalitas resmi badan usaha.",
+  },
+  {
+    year:  2025,
+    event: "Melakukan Akte Perubahan Perusahaan dan memperoleh SK Menkumham RI terbaru, menandai perkembangan struktur perusahaan.",
+  },
 ] as const;
 
 export default function AboutPage() {
@@ -73,30 +79,32 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-neutral-600 leading-relaxed">
                 <p>
-                  <strong className="text-neutral-800 font-600">{COMPANY.name}</strong> adalah
-                  perusahaan konstruksi nasional yang telah berdiri sejak {COMPANY.founded} dan berkomitmen
-                  untuk menghadirkan solusi infrastruktur berkualitas tinggi di seluruh Indonesia.
+                  <strong className="text-neutral-800 font-600">{COMPANY.name}</strong> berawal
+                  dari usaha di bidang sipil dan konstruksi, mengerjakan proyek pembangunan rumah
+                  tinggal dan gudang. Seiring waktu, lingkup usaha berkembang ke bidang interior
+                  fit out dan disain perencanaan.
                 </p>
                 <p>
-                  Dengan pengalaman lebih dari {COMPANY.experience} tahun, kami telah dipercaya
-                  oleh lebih dari 150 klien dari sektor swasta dan pemerintahan untuk menyelesaikan
-                  berbagai proyek mulai dari gedung komersial, infrastruktur jalan, hingga jembatan
-                  berskala nasional.
+                  Dengan perkembangan bidang usaha yang cepat, dibentuklah CV. Indofa, yang kemudian
+                  berkembang dan berubah menjadi <strong className="text-neutral-800 font-600">PT.
+                  Indofa Gemilang Konstruksi</strong> — perusahaan General Contractor, Trading and
+                  Consultant yang bergerak di bidang Konstruksi Umum, Gambar dan Perencanaan, serta
+                  Pengawasan.
                 </p>
                 <p>
-                  Diperkuat oleh lebih dari 500 tenaga ahli bersertifikat dan peralatan konstruksi
-                  modern, kami beroperasi di seluruh pulau besar Indonesia dengan standar keselamatan
-                  dan kualitas yang tidak pernah kami kompromikan.
+                  Dengan cakupan bidang usaha tersebut, pengguna jasa layanan kami dapat menerima
+                  pelayanan prima yang terintegrasi antara pelaksanaan, perencanaan, dan pengawasan
+                  dalam satu atap.
                 </p>
               </div>
               <div className="mt-8 grid grid-cols-2 gap-4">
                 <div className="bg-white rounded-xl border border-neutral-200 p-4">
-                  <p className="text-2xl font-display font-700 text-brand-600">ISO 9001</p>
-                  <p className="text-xs text-neutral-500 mt-1">Sertifikasi Mutu</p>
+                  <p className="text-2xl font-display font-700 text-brand-600">PT</p>
+                  <p className="text-xs text-neutral-500 mt-1">General Contractor, Trading &amp; Consultant</p>
                 </div>
                 <div className="bg-white rounded-xl border border-neutral-200 p-4">
-                  <p className="text-2xl font-display font-700 text-brand-600">Grade 7</p>
-                  <p className="text-xs text-neutral-500 mt-1">LPJK Nasional</p>
+                  <p className="text-2xl font-display font-700 text-brand-600">{COMPANY.founded}</p>
+                  <p className="text-xs text-neutral-500 mt-1">Tahun Pendirian Resmi</p>
                 </div>
               </div>
             </div>

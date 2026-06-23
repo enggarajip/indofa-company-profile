@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useId } from "react";
+import { useRef, useState, useCallback, useEffect, useId } from "react";
 import Image from "next/image";
 import { Upload, X, Loader2, ImageIcon } from "lucide-react";
 import { uploadProjectImage } from "@/lib/actions/projects";
@@ -40,15 +40,28 @@ export function SingleImageUploader({
       // Local preview segera tampil
       setPreview(URL.createObjectURL(file));
 
-      const result = await uploadProjectImage(file, projectId);
-      setUploading(false);
+      try {
+        const result = await uploadProjectImage(file, projectId);
+        setUploading(false);
 
-      if (!result.success) {
-        onError(result.error);
+        if (!result) {
+          onError("Server tidak memberi respons. Muat ulang halaman dan coba lagi.");
+          setPreview(currentPath ? getStorageUrl(currentPath) : null);
+          return;
+        }
+
+        if (!result.success) {
+          onError(result.error);
+          setPreview(currentPath ? getStorageUrl(currentPath) : null);
+          return;
+        }
+        onChange(result.data.path);
+      } catch (err) {
+        console.error("[SingleImageUploader] Upload gagal:", err);
+        setUploading(false);
+        onError(`Error tak terduga saat upload: ${err instanceof Error ? err.message : String(err)}`);
         setPreview(currentPath ? getStorageUrl(currentPath) : null);
-        return;
       }
-      onChange(result.data.path);
     },
     [projectId, currentPath, onChange, onError]
   );
@@ -188,32 +201,44 @@ export function MultiImageUploader({
       const newPaths: string[] = [];
 
       for (const file of fileArray) {
-        const result = await uploadProjectImage(file, projectId);
-        if (result.success) {
-          newPaths.push(result.data.path);
-        } else {
-          onError(`Gagal upload "${file.name}": ${result.error}`);
+        try {
+          const result = await uploadProjectImage(file, projectId);
+
+          if (result && result.success) {
+            newPaths.push(result.data.path);
+          } else if (result) {
+            onError(`Gagal upload "${file.name}": ${result.error}`);
+          } else {
+            onError(`Gagal upload "${file.name}": server tidak memberi respons. Muat ulang halaman dan coba lagi.`);
+          }
+        } catch (err) {
+          console.error("[MultiImageUploader] Upload gagal:", file.name, err);
+          onError(`Error tak terduga saat upload "${file.name}": ${err instanceof Error ? err.message : String(err)}`);
         }
       }
 
       setUploading(false);
-      // Functional update: tidak bergantung pada closure `paths` yang bisa stale
-      // jika user memicu upload baru sebelum upload sebelumnya selesai.
-      setPaths((prevPaths) => {
-        const updated = [...prevPaths, ...newPaths];
-        onChange(updated);
-        return updated;
-      });
+
+      // Functional update untuk hitung state baru dengan aman (tidak bergantung
+      // pada closure `paths` yang bisa stale), TANPA memanggil onChange di dalam
+      // updater itu sendiri — React tidak mengizinkan trigger update komponen lain
+      // (parent ProjectForm via onChange) selagi berada di tengah proses render/commit
+      // komponen ini. onChange dipanggil terpisah setelah state benar-benar di-set.
+      setPaths((prevPaths) => [...prevPaths, ...newPaths]);
     },
-    [projectId, onChange, onError]
+    [projectId, onError]
   );
 
+  // Setiap kali `paths` berubah (termasuk dari upload maupun hapus foto),
+  // beri tahu parent. Ini menggantikan pemanggilan onChange langsung di
+  // dalam setPaths updater, yang sebelumnya memicu peringatan React
+  // "Cannot update a component while rendering a different component".
+  useEffect(() => {
+    onChange(paths);
+  }, [paths]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const removeImage = (index: number) => {
-    setPaths((prevPaths) => {
-      const updated = prevPaths.filter((_, i) => i !== index);
-      onChange(updated);
-      return updated;
-    });
+    setPaths((prevPaths) => prevPaths.filter((_, i) => i !== index));
   };
 
   const openFileDialog = () => {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Mail, Phone, MapPin, Instagram, Linkedin } from "lucide-react";
+import { Building2, Mail, Phone, MapPin, Clock, Instagram, Linkedin } from "lucide-react";
 import { COMPANY } from "@/lib/config/company";
 
 export function Footer() {
@@ -26,10 +26,19 @@ export function Footer() {
             </p>
             <div className="flex gap-3 mt-5">
               <a
+                href={`https://wa.me/${COMPANY.contact.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-green-500 hover:scale-110 flex items-center justify-center transition-all duration-200"
+                aria-label="WhatsApp"
+              >
+                <span className="text-sm" aria-hidden="true">💬</span>
+              </a>
+              <a
                 href={COMPANY.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 hover:scale-110 flex items-center justify-center transition-all duration-200"
                 aria-label="Instagram"
               >
                 <Instagram size={16} />
@@ -38,7 +47,7 @@ export function Footer() {
                 href={COMPANY.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 hover:scale-110 flex items-center justify-center transition-all duration-200"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={16} />
@@ -46,7 +55,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
+          {/* Quick Links */}
           <div>
             <h3 className="font-display font-600 text-sm text-white/90 mb-4 uppercase tracking-wide">
               Navigasi
@@ -61,7 +70,7 @@ export function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
+                    className="text-sm text-white/60 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200"
                   >
                     {label}
                   </Link>
@@ -77,7 +86,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-white/60">
-                <MapPin size={15} className="text-accent-400 flex-shrink-0 mt-0.5" />
+                <MapPin size={15} className="text-accent-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span>{COMPANY.contact.address}</span>
               </li>
               <li>
@@ -85,7 +94,7 @@ export function Footer() {
                   href={`mailto:${COMPANY.contact.email}`}
                   className="flex items-center gap-2.5 text-sm text-white/60 hover:text-white transition-colors"
                 >
-                  <Mail size={15} className="text-accent-400 flex-shrink-0" />
+                  <Mail size={15} className="text-accent-400 flex-shrink-0" aria-hidden="true" />
                   {COMPANY.contact.email}
                 </a>
               </li>
@@ -94,9 +103,13 @@ export function Footer() {
                   href={`tel:${COMPANY.contact.phone.replace(/\s/g, "")}`}
                   className="flex items-center gap-2.5 text-sm text-white/60 hover:text-white transition-colors"
                 >
-                  <Phone size={15} className="text-accent-400 flex-shrink-0" />
+                  <Phone size={15} className="text-accent-400 flex-shrink-0" aria-hidden="true" />
                   {COMPANY.contact.phone}
                 </a>
+              </li>
+              <li className="flex items-start gap-2.5 text-sm text-white/60">
+                <Clock size={15} className="text-accent-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <span className="whitespace-pre-line">{COMPANY.contact.operatingHours}</span>
               </li>
             </ul>
           </div>

@@ -10,7 +10,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/portfolio/${project.slug}`}
-      className="group block bg-white rounded-2xl overflow-hidden border border-neutral-200 hover:border-brand-200 shadow-card hover:shadow-card-hover transition-all duration-300"
+      className="group block bg-white rounded-2xl overflow-hidden border border-neutral-200 hover:border-brand-200 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] bg-neutral-100 overflow-hidden">

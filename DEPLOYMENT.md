@@ -6,9 +6,10 @@
 3. [Environment Variables](#3-environment-variables)
 4. [Connect Domain](#4-connect-domain)
 5. [Verifikasi Setelah Deploy](#5-verifikasi-setelah-deploy)
-6. [Redeploy](#6-redeploy)
-7. [Rollback](#7-rollback)
-8. [Troubleshooting](#8-troubleshooting)
+6. [Vercel Analytics & Speed Insights](#6-vercel-analytics--speed-insights)
+7. [Redeploy](#7-redeploy)
+8. [Rollback](#8-rollback)
+9. [Troubleshooting](#9-troubleshooting)
 
 ---
 
@@ -159,7 +160,23 @@ Buka URL production dan cek setiap halaman:
 
 ---
 
-## 6. Redeploy
+## 6. Vercel Analytics & Speed Insights
+
+Project ini sudah menyertakan package `@vercel/analytics` dan `@vercel/speed-insights` di `app/layout.tsx`. Kedua fitur ini **otomatis aktif** begitu project di-deploy ke Vercel — tidak perlu instalasi tambahan atau environment variable apa pun.
+
+### Cara melihat datanya
+1. Buka Vercel dashboard → pilih project
+2. Klik tab **Analytics** — menampilkan jumlah pengunjung, halaman populer, sumber traffic
+3. Klik tab **Speed Insights** — menampilkan Core Web Vitals (LCP, FID, CLS) dari pengunjung nyata
+
+### Catatan
+- Data baru muncul setelah ada traffic nyata ke domain production — biasanya butuh beberapa jam pertama
+- Saat `npm run dev` di lokal, kedua fitur ini berjalan dalam **debug mode** dan tidak mengirim data apa pun ke server Vercel (ini normal, terlihat di console browser sebagai log `[Vercel Web Analytics] Debug mode is enabled...`)
+- Tidak ada biaya tambahan untuk traffic dalam batas wajar di paket Hobby
+
+---
+
+## 7. Redeploy
 
 ### Otomatis (recommended):
 Setiap kali `git push` ke branch `main`, Vercel otomatis melakukan redeploy.
@@ -177,7 +194,7 @@ git push origin main
 
 ---
 
-## 7. Rollback
+## 8. Rollback
 
 Jika deployment terbaru bermasalah:
 
@@ -190,7 +207,7 @@ Rollback selesai dalam hitungan detik — tanpa perlu push kode baru.
 
 ---
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 ### Build gagal di Vercel tapi lokal berhasil
 - Pastikan semua environment variables sudah diisi di Vercel
@@ -211,6 +228,12 @@ Rollback selesai dalam hitungan detik — tanpa perlu push kode baru.
 - Sitemap di-generate saat build, bukan real-time
 - Redeploy akan mengupdate sitemap dengan proyek terbaru
 - Atau tambahkan `revalidate` di `sitemap.ts` untuk ISR
+
+### "Failed to find Server Action" atau upload tiba-tiba gagal — HANYA saat development lokal
+- Ini **bukan bug**, ini perilaku normal Next.js dev mode
+- Terjadi karena Fast Refresh mengganti ID internal Server Action setiap kali file disimpan, sementara tab browser yang sudah terbuka masih memegang ID lama
+- **Solusi:** klik kanan tombol refresh di browser → pilih **"Empty Cache and Hard Reload"** (F5 biasa tidak cukup)
+- Masalah ini **tidak akan terjadi di production/Vercel** karena tidak ada Fast Refresh di sana — setiap deployment adalah build penuh yang konsisten
 
 ### Domain belum aktif / SSL error
 - Tunggu propagasi DNS sampai 48 jam

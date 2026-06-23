@@ -92,7 +92,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 button { cursor: pointer; }
-img, video { max-width: 100%; height: auto; }
+
+/* Reset dasar untuk gambar biasa — TIDAK berlaku untuk Next.js <Image fill>,
+   yang ditandai otomatis dengan atribut data-nimg="fill" dan WAJIB mengisi
+   100% lebar & tinggi parent relative-nya. Tanpa pengecualian ini, "height:
+   auto" memaksa gambar fill mengikuti aspect ratio aslinya sendiri alih-alih
+   mengisi penuh container, menyebabkan gap kosong pada hero/cover yang lebar
+   asli foto berbeda dari aspect ratio container yang dipaksa lewat CSS. */
+img:not([data-nimg="fill"]), video { max-width: 100%; height: auto; }
 
 /* ── Public utilities ─────────────────────────────────────────────────────── */
 .container-content {

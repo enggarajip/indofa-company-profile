@@ -2,7 +2,10 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle, Phone } from "lucide-react";
 import { getProjects } from "@/lib/actions/projects";
 import { ProjectCard } from "@/components/public/ProjectCard";
-import { COMPANY, SERVICES, VALUES, WHY_US } from "@/lib/config/company";
+import { StatsSection } from "@/components/public/StatsSection";
+import { PartnersSection } from "@/components/public/PartnersSection";
+import { TestimonialSection } from "@/components/public/TestimonialSection";
+import { COMPANY, SERVICES, VALUES } from "@/lib/config/company";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -63,7 +66,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-base font-600 text-white border-2 border-white/30 hover:border-white/60 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-7 py-3.5 text-base font-600 text-white border-2 border-white/30 hover:border-white/60 hover:bg-white/5 rounded-lg transition-all duration-300"
               >
                 <Phone size={18} /> Hubungi Kami
               </Link>
@@ -80,18 +83,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── STATS ─────────────────────────────────────────────────────────── */}
-      <section className="bg-neutral-50 py-14">
-        <div className="container-content">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {WHY_US.map(({ label, value }) => (
-              <div key={label} className="text-center">
-                <p className="text-4xl font-display font-800 text-brand-600 mb-1">{value}</p>
-                <p className="text-sm text-neutral-500">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StatsSection />
 
       {/* ── ABOUT INTRO ───────────────────────────────────────────────────── */}
       <section className="section bg-white">
@@ -142,8 +134,11 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── PARTNERS / CLIENTS ───────────────────────────────────────────── */}
+      <PartnersSection />
+
       {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-      <section className="section bg-neutral-50">
+      <section className="section bg-white">
         <div className="container-content">
           <div className="text-center mb-14">
             <p className="text-accent-500 font-600 text-sm uppercase tracking-widest mb-3">Layanan</p>
@@ -158,7 +153,7 @@ export default async function HomePage() {
             {SERVICES.map((s) => (
               <div
                 key={s.title}
-                className="bg-white rounded-2xl p-6 border border-neutral-200 hover:border-brand-200 hover:shadow-card-hover transition-all group"
+                className="bg-white rounded-2xl p-6 border border-neutral-200 hover:border-brand-200 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 group"
               >
                 <div className="text-3xl mb-4">{SERVICE_EMOJI[s.icon] ?? "🏗️"}</div>
                 <h3 className="font-display font-600 text-neutral-900 mb-2 group-hover:text-brand-700 transition-colors">
@@ -172,7 +167,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── FEATURED PROJECTS ─────────────────────────────────────────────── */}
-      <section className="section bg-white">
+      <section className="section bg-neutral-50">
         <div className="container-content">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
@@ -187,9 +182,13 @@ export default async function HomePage() {
           </div>
 
           {projects.length === 0 ? (
-            <div className="text-center py-20 text-neutral-500">
-              <p className="text-4xl mb-4">🏗️</p>
-              <p>Proyek akan segera ditampilkan.</p>
+            <div className="text-center py-20">
+              <div className="text-5xl mb-4" aria-hidden="true">🏗️</div>
+              <p className="text-neutral-600 font-500 mb-1">Belum ada proyek untuk ditampilkan</p>
+              <p className="text-neutral-500 text-sm mb-5">Proyek unggulan kami akan segera hadir di sini.</p>
+              <Link href="/contact" className="text-sm text-brand-600 hover:text-brand-800 font-500 inline-flex items-center gap-1">
+                Hubungi kami untuk informasi proyek <ArrowRight size={14} />
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -200,6 +199,9 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      {/* ── TESTIMONIALS ──────────────────────────────────────────────────── */}
+      <TestimonialSection />
 
       {/* ── VALUES ────────────────────────────────────────────────────────── */}
       <section className="section bg-brand-950">
@@ -214,7 +216,7 @@ export default async function HomePage() {
             {VALUES.map((v) => (
               <div
                 key={v.title}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors"
+                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="text-3xl mb-4">{VALUE_EMOJI[v.icon] ?? "✨"}</div>
                 <h3 className="font-display font-600 text-white mb-2">{v.title}</h3>
@@ -237,7 +239,7 @@ export default async function HomePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-brand-700 font-600 rounded-lg hover:bg-neutral-50 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-brand-700 font-600 rounded-lg hover:bg-neutral-50 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
             >
               <Phone size={18} /> Hubungi Sekarang
             </Link>
@@ -245,7 +247,7 @@ export default async function HomePage() {
               href={`https://wa.me/${COMPANY.contact.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-green-500 text-white font-600 rounded-lg hover:bg-green-600 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-green-500 text-white font-600 rounded-lg hover:bg-green-600 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
             >
               💬 WhatsApp
             </a>

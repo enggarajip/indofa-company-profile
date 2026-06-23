@@ -22,8 +22,20 @@ export function Navbar() {
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", fn, { passive: true });
-    fn();
-    return () => window.removeEventListener("scroll", fn);
+
+    // Cek posisi scroll awal SETELAH frame pertama, bukan secara sinkron
+    // langsung saat effect ini jalan. Memanggil fn() langsung di sini bisa
+    // membuat render pertama di client berbeda dari hasil SSR (yang selalu
+    // mengasumsikan scrolled=false), karena posisi scroll browser bisa saja
+    // sudah > 20px saat halaman di-refresh (HMR di development, atau browser
+    // memulihkan posisi scroll saat reload). requestAnimationFrame menunda
+    // pengecekan ini sampai setelah React selesai mencocokkan hasil hydration.
+    const raf = requestAnimationFrame(fn);
+
+    return () => {
+      window.removeEventListener("scroll", fn);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => { setOpen(false); }, [pathname]);

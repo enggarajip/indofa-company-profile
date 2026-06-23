@@ -4,6 +4,78 @@ Centang semua item sebelum website dinyatakan live.
 
 ---
 
+## ✅ Verifikasi Fungsional
+
+Bagian ini menguji **alur penggunaan nyata** — coba langsung setiap aksi di production URL, jangan hanya cek konfigurasi.
+
+### Database & Environment Setup
+- [ ] `supabase/schema.sql` sudah dijalankan di SQL Editor Supabase
+- [ ] Tabel `projects` muncul di Table Editor dengan kolom yang sesuai
+- [ ] `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` sudah diisi di Vercel
+- [ ] `npm run build` berhasil tanpa error sebelum deploy
+
+### Deployment
+- [ ] Repo sudah di-push ke GitHub
+- [ ] Project sudah ter-import dan ter-deploy di Vercel
+- [ ] Status deployment terbaru: **Ready** (bukan Error)
+- [ ] URL production bisa diakses dan tidak menampilkan halaman error
+
+### Admin Login
+- [ ] Buka `https://domain.com/login` → form login tampil
+- [ ] Login dengan email/password admin yang benar → berhasil masuk ke `/admin`
+- [ ] Login dengan password salah → muncul pesan error, tidak crash
+- [ ] Akses `https://domain.com/admin` tanpa login (mode incognito) → otomatis redirect ke `/login`
+- [ ] Setelah login, redirect kembali ke halaman yang awalnya dituju (bukan selalu ke `/admin`)
+- [ ] Klik tombol **Keluar** di sidebar → berhasil logout dan kembali ke `/login`
+
+### Create Project
+- [ ] Buka `/admin/projects/new` → form tampil lengkap
+- [ ] Submit form tanpa isi field wajib → muncul pesan validasi, tidak crash
+- [ ] Isi semua field dengan benar lalu submit → muncul notifikasi sukses
+- [ ] Proyek baru muncul di `/admin/projects` dan di halaman publik `/portfolio`
+
+### Edit Project
+- [ ] Buka `/admin/projects` → klik ikon edit pada salah satu proyek
+- [ ] Form ter-isi otomatis dengan data proyek yang sudah ada
+- [ ] Ubah salah satu field lalu simpan → perubahan tersimpan dan terlihat di halaman publik
+
+### Delete Project
+- [ ] Klik ikon hapus pada salah satu proyek → muncul dialog konfirmasi
+- [ ] Klik **Batal** → proyek tidak terhapus
+- [ ] Klik **Ya, Hapus** → proyek hilang dari daftar dan dari halaman publik
+- [ ] Foto terkait proyek tersebut juga terhapus dari Supabase Storage
+
+### Upload Image
+- [ ] Upload foto cover (klik atau drag & drop) → preview tampil, tersimpan ke Supabase Storage
+- [ ] Upload beberapa foto sekaligus ke galeri → semua tampil setelah selesai upload
+- [ ] Upload file bukan gambar (misal `.pdf`) → ditolak dengan pesan error yang jelas
+- [ ] Upload file di atas 10 MB → ditolak dengan pesan error yang jelas
+- [ ] Hapus salah satu foto di galeri (klik ikon X) → foto hilang dari preview
+
+### Contact Page
+- [ ] Buka `/contact` → info kontak, Google Maps, dan form tampil
+- [ ] Isi form pesan dengan benar lalu submit → muncul pesan sukses, form ter-reset
+- [ ] Submit form dengan email tidak valid → muncul pesan validasi
+- [ ] Submit pesan kurang dari batas minimum karakter → muncul pesan validasi
+- [ ] Klik tombol WhatsApp → membuka WhatsApp dengan nomor dan pesan yang benar
+
+### Portfolio Page
+- [ ] Buka `/portfolio` → seluruh proyek dari database tampil
+- [ ] Coba search berdasarkan judul → hasil terfilter sesuai
+- [ ] Coba filter kategori → hasil terfilter sesuai
+- [ ] Coba sorting terbaru/terlama → urutan berubah sesuai
+- [ ] Klik salah satu proyek → masuk ke halaman detail dengan data yang benar
+- [ ] Buka URL proyek dengan slug yang tidak ada → tampil halaman 404, bukan error
+
+### SEO Page
+- [ ] View page source homepage → ada tag `<title>`, `<meta description>`, Open Graph
+- [ ] View page source halaman detail proyek → metadata sesuai data proyek tersebut
+- [ ] Buka `https://domain.com/sitemap.xml` → menampilkan semua halaman + seluruh slug proyek
+- [ ] Buka `https://domain.com/robots.txt` → `/admin` dan `/login` ada di Disallow
+- [ ] Share link homepage di WhatsApp → preview gambar dan judul muncul
+
+---
+
 ## 🗄️ Database (Supabase)
 
 - [ ] Tabel `projects` sudah dibuat dan berisi data
@@ -113,6 +185,7 @@ Centang semua item sebelum website dinyatakan live.
 - [ ] Admin panel tidak bisa diakses tanpa login
 - [ ] Secret key Supabase tidak ter-expose di kode (gunakan hanya anon key)
 - [ ] `.env.local` tidak ter-commit ke Git
+- [ ] Setiap Server Action di `lib/actions/*.ts` punya pengecekan auth sendiri (tidak hanya mengandalkan middleware)
 
 ## 🚀 Final Deploy
 

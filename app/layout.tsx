@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { organizationJsonLd } from "@/lib/seo/jsonld";
 import { COMPANY } from "@/lib/config/company";
 
@@ -79,14 +81,12 @@ export const metadata: Metadata = {
 
   // ── Icons & Manifest ─────────────────────────────────────────────────────
   icons: {
-  icon: [
-    { url: "/favicon.ico" },
-    { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-  ],
-  apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
-  shortcut: "/favicon.ico",
-},
+    icon:    [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple:   [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
+  },
   manifest: "/site.webmanifest",
 };
 
@@ -121,6 +121,15 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+
+        {/*
+          Vercel Web Analytics & Speed Insights — komponen resmi Vercel.
+          Hanya aktif mengirim data saat di-deploy ke Vercel (production/preview);
+          tidak melakukan apa-apa saat development lokal, jadi aman dan tidak
+          memerlukan konfigurasi tambahan apa pun di sisi kode.
+        */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

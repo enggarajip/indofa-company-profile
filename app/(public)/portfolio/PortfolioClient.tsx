@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Search, X, Filter, SlidersHorizontal } from "lucide-react";
 import { ProjectCard } from "@/components/public/ProjectCard";
 import { PROJECT_CATEGORIES } from "@/types";
@@ -45,6 +46,7 @@ export function PortfolioClient({ initialProjects }: { initialProjects: Project[
 
   const reset = () => { setSearch(""); setCategory(""); setSort("created_at_desc"); setPage(1); };
   const hasFilter = search || category || sort !== "created_at_desc";
+  const isDatabaseEmpty = initialProjects.length === 0;
 
   return (
     <div>
@@ -116,13 +118,39 @@ export function PortfolioClient({ initialProjects }: { initialProjects: Project[
 
       {/* Grid */}
       {paginated.length === 0 ? (
-        <div className="text-center py-24">
-          <p className="text-5xl mb-4">🔍</p>
-          <p className="text-neutral-500 font-500">Tidak ada proyek yang sesuai.</p>
-          <button onClick={reset} className="mt-3 text-sm text-brand-600 hover:text-brand-800 font-500">
-            Hapus semua filter
-          </button>
-        </div>
+        isDatabaseEmpty ? (
+          <div className="text-center py-24 px-4">
+            <div className="w-20 h-20 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-5" aria-hidden="true">
+              <span className="text-4xl">🏗️</span>
+            </div>
+            <p className="text-neutral-700 font-600 mb-1.5">Belum Ada Proyek Ditampilkan</p>
+            <p className="text-neutral-500 text-sm mb-5 max-w-sm mx-auto">
+              Kami sedang menyiapkan dokumentasi proyek terbaik kami. Hubungi tim kami untuk informasi proyek yang sudah kami selesaikan.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 text-sm text-white bg-brand-600 hover:bg-brand-700 font-500 px-5 py-2.5 rounded-lg transition-colors"
+            >
+              Hubungi Kami
+            </Link>
+          </div>
+        ) : (
+          <div className="text-center py-24 px-4">
+            <div className="w-20 h-20 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-5" aria-hidden="true">
+              <Search size={32} className="text-neutral-300" />
+            </div>
+            <p className="text-neutral-700 font-600 mb-1.5">Tidak ada proyek yang sesuai</p>
+            <p className="text-neutral-500 text-sm mb-5 max-w-sm mx-auto">
+              Coba ubah kata kunci pencarian atau hapus filter kategori untuk melihat proyek lainnya.
+            </p>
+            <button
+              onClick={reset}
+              className="inline-flex items-center gap-2 text-sm text-brand-600 hover:text-brand-800 font-500 px-4 py-2 rounded-lg hover:bg-brand-50 transition-colors"
+            >
+              Hapus semua filter
+            </button>
+          </div>
+        )
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {paginated.map((p) => (

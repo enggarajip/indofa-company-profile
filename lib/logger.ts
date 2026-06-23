@@ -86,9 +86,55 @@ export const logger = {
 
     log("error", message, errMeta);
 
-    // TODO: Hook ke Sentry jika diperlukan
-    // if (IS_PROD && typeof Sentry !== "undefined") {
-    //   Sentry.captureException(error, { extra: meta });
-    // }
+    // ─────────────────────────────────────────────────────────────────────
+    // MONITORING PREPARATION — belum diaktifkan, hanya struktur untuk nanti
+    // ─────────────────────────────────────────────────────────────────────
+    //
+    // Sentry (error tracking):
+    //   1. npm install @sentry/nextjs
+    //   2. npx @sentry/wizard@latest -i nextjs
+    //   3. Uncomment baris di bawah setelah Sentry terpasang:
+    //
+    //   if (IS_PROD) {
+    //     import("@sentry/nextjs").then(({ captureException }) => {
+    //       captureException(error, { extra: meta });
+    //     });
+    //   }
   },
 } as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAMED EXPORTS — alias sederhana di atas `logger` di atas.
+// Tidak menduplikasi logic, hanya memberi API alternatif (logInfo, logWarn,
+// logError) untuk kode yang lebih suka gaya pemanggilan fungsi langsung
+// dibanding object method (logger.info(...) vs logInfo(...)).
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const logInfo  = logger.info;
+export const logWarn  = logger.warn;
+export const logError = logger.error;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MONITORING PREPARATION — referensi untuk integrasi masa depan
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Google Analytics (GA4):
+//   1. Daftar property di analytics.google.com, dapatkan Measurement ID (G-XXXXXXX)
+//   2. Tambahkan NEXT_PUBLIC_GA_ID ke .env.local
+//   3. Buat lib/analytics/ga.ts yang inject <Script> GA4 ke app/layout.tsx
+//   4. Custom event bisa dikirim lewat window.gtag('event', ...)
+//
+// Google Search Console:
+//   1. Daftar properti domain di search.google.com/search-console
+//   2. Verifikasi lewat DNS TXT record atau file HTML di /public
+//   3. Submit sitemap.xml yang sudah ada (app/sitemap.ts) ke Search Console
+//   4. Tidak butuh perubahan kode lain — sitemap sudah otomatis ter-generate
+//
+// Sentry (error tracking & performance monitoring):
+//   1. Daftar project baru di sentry.io
+//   2. Jalankan: npx @sentry/wizard@latest -i nextjs
+//   3. Wizard akan otomatis membuat sentry.client.config.ts,
+//      sentry.server.config.ts, dan instrumentation.ts
+//   4. Hook logger.error() di atas akan otomatis mengirim error ke Sentry
+//      setelah baris captureException() di-uncomment
+// ─────────────────────────────────────────────────────────────────────────────

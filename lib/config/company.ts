@@ -6,37 +6,38 @@
 
 export const COMPANY = {
   name:        "PT Indofa Gemilang Konstruksi",
-  shortName:   "Indofa Gemilang",
-  tagline:     "Membangun Indonesia dengan Kualitas Terbaik",
-  description: "Perusahaan konstruksi terpercaya dengan pengalaman lebih dari 15 tahun. Spesialis gedung komersial, infrastruktur jalan, dan jembatan di seluruh Indonesia.",
-  founded:     2009,
-  experience:  15,
+  shortName:   "Indofa Gemilang Konstruksi",
+  tagline:     "General Contractor, Trading and Consultant Terpercaya",
+  description: "PT Indofa Gemilang Konstruksi adalah perusahaan General Contractor, Trading and Consultant yang bergerak di bidang Konstruksi Umum, Gambar dan Perencanaan, serta Pengawasan. Berawal dari CV. Indofa yang menangani proyek rumah tinggal dan gudang, kini berkembang ke bidang interior fit out dan desain perencanaan dengan pelayanan prima yang terintegrasi antara pelaksanaan, perencanaan, dan pengawasan.",
+  founded:     2017,
+  experience:  9, // 2026 - 2017 (akte pendirian PT)
   url:         "https://indofagemilang.co.id",
 
   contact: {
-    address:   "Jl. Gatot Subroto No. 45, Jakarta Selatan, DKI Jakarta 12950",
-    email:     "info@indofagemilang.co.id",
-    phone:     "+62 21 5555 1234",
-    whatsapp:  "6281234567890",
+    // Alamat kantor tidak tercantum di company profile — isi setelah data tersedia.
+    address:   "Jakarta, Indonesia",
+    email:     "indofa.gk@gmail.com",
+    phone:     "+62 21 5972 9980",
+    whatsapp:  "6285780026999",
     mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d106.82!3d-6.23!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTQnMDAuMCJTIDEwNsKwNDknMTIuMCJF!5e0!3m2!1sid!2sid!4v1234567890",
     mapsUrl:   "https://maps.google.com/?q=-6.23,106.82",
+    operatingHours: "Senin – Jumat: 08.00 – 17.00 WIB\nSabtu: 08.00 – 13.00 WIB",
   },
 
+  // Belum ada akun media sosial resmi tercantum di company profile.
   social: {
-    instagram: "https://instagram.com/indofagemilang",
-    linkedin:  "https://linkedin.com/company/indofagemilang",
+    instagram: "",
+    linkedin:  "",
   },
 } as const;
 
 export const VISION =
-  "Menjadi perusahaan konstruksi nasional terdepan yang dikenal atas kualitas, integritas, dan inovasi dalam setiap proyek yang kami kerjakan.";
+  "Menjadi perusahaan yang handal dan terdepan di Indonesia yang mampu menghadapi persaingan global demi kemajuan dan harkat martabat bangsa.";
 
 export const MISSION = [
-  "Menghadirkan solusi konstruksi berkualitas tinggi yang memenuhi dan melampaui ekspektasi klien.",
-  "Mengutamakan keselamatan kerja dan kesejahteraan seluruh tenaga kerja di lapangan.",
-  "Menerapkan teknologi konstruksi modern untuk efisiensi dan ketepatan waktu penyelesaian.",
-  "Berkontribusi aktif dalam pembangunan infrastruktur Indonesia yang berkelanjutan.",
-  "Membangun hubungan jangka panjang berbasis kepercayaan dengan klien, mitra, dan pemangku kepentingan.",
+  "Menghasilkan produk yang berkualitas dengan mengutamakan mutu dan pelayanan demi kepuasan pelanggan sehingga menjadi mitra usaha yang andal dan terpercaya.",
+  "Pelatihan dan recruitment sumber daya manusia yang tepat, untuk menghasilkan tenaga kerja yang kompeten dan bersemangat tinggi sesuai budaya perusahaan.",
+  "Bangga dan prima dalam industri jasa konstruksi.",
 ] as const;
 
 export const VALUES = [
@@ -64,40 +65,68 @@ export const VALUES = [
 
 export const SERVICES = [
   {
-    title:       "Gedung Komersial & Perkantoran",
-    description: "Pembangunan gedung bertingkat, pusat perbelanjaan, hotel, dan fasilitas komersial lainnya dengan standar internasional.",
+    title:       "Kontraktor",
+    description: "Konstruksi sipil, arsitektur, mekanikal dan elektrikal, serta landscape (taman) — dikerjakan dengan standar mutu dan ketepatan waktu.",
     icon:        "building",
   },
   {
-    title:       "Infrastruktur Jalan & Jembatan",
-    description: "Konstruksi jalan raya, jalan tol, jembatan beton, dan infrastruktur transportasi untuk konektivitas yang lebih baik.",
-    icon:        "bridge",
-  },
-  {
-    title:       "Perumahan & Hunian",
-    description: "Pengembangan kawasan perumahan, apartemen, dan hunian vertikal dengan desain modern dan ramah lingkungan.",
-    icon:        "home",
-  },
-  {
-    title:       "Fasilitas Industri",
-    description: "Pembangunan pabrik, gudang, kawasan industri, dan infrastruktur pendukung untuk sektor manufaktur dan logistik.",
-    icon:        "factory",
-  },
-  {
-    title:       "Fasilitas Pemerintahan",
-    description: "Konstruksi gedung pemerintahan, fasilitas publik, sekolah, rumah sakit, dan sarana prasarana sosial masyarakat.",
+    title:       "Konsultan",
+    description: "Disain struktur, disain arsitektur, dan disain landscape (taman) untuk perencanaan proyek yang matang sejak tahap awal.",
     icon:        "landmark",
   },
   {
-    title:       "Renovasi & Rehabilitasi",
-    description: "Renovasi total maupun parsial gedung existing, restorasi bangunan bersejarah, dan peningkatan kapasitas fasilitas.",
+    title:       "Pemeliharaan Gedung",
+    description: "Pemeliharaan struktur, arsitektur, mekanikal dan elektrikal, serta landscape (taman) untuk menjaga kondisi bangunan tetap optimal.",
     icon:        "wrench",
+  },
+  {
+    title:       "Leveransir",
+    description: "Penyediaan alat konstruksi & teknik, mekanikal & elektrikal, mesin & suku cadang, komputer & suku cadang, hingga perlengkapan kantor.",
+    icon:        "factory",
   },
 ] as const;
 
 export const WHY_US = [
-  { label: "Tahun Pengalaman",  value: "15+" },
-  { label: "Proyek Selesai",    value: "200+" },
-  { label: "Klien Puas",        value: "150+" },
-  { label: "Tenaga Ahli",       value: "500+" },
+  { label: "Tahun Pengalaman", value: "7+" },
+  { label: "Bidang Usaha", value: "4" },
+  { label: "Layanan Utama", value: "4" },
+  { label: "Komitmen", value: "100%" },
+] as const;
+
+// ─── Testimonial ──────────────────────────────────────────────────────────────
+// Data dummy. Ganti dengan testimoni klien asli setelah tersedia.
+export const TESTIMONIALS = [
+  {
+    name:    "Budi Santoso",
+    company: "PT Maju Bersama",
+    role:    "Direktur Operasional",
+    rating:  5,
+    comment: "Pengerjaan gedung kantor kami selesai tepat waktu dengan kualitas yang sangat baik. Tim Indofa sangat profesional dan komunikatif sepanjang proyek berjalan.",
+  },
+  {
+    name:    "Sri Wahyuni",
+    company: "Yayasan Pendidikan Nusantara",
+    role:    "Ketua Yayasan",
+    rating:  5,
+    comment: "Renovasi gedung sekolah kami dikerjakan dengan rapi dan sesuai anggaran yang disepakati. Tim lapangan sangat menjaga kebersihan dan ketertiban selama proses berlangsung.",
+  },
+  {
+    name:    "Hendra Gunawan",
+    company: "Grand Residence Group",
+    role:    "Project Owner",
+    rating:  4,
+    comment: "Kerja sama yang baik dari awal perencanaan hingga serah terima. Detail konstruksi diperhatikan dengan teliti, dan tim selalu responsif terhadap setiap pertanyaan kami.",
+  },
+] as const;
+
+// ─── Partner / Client Logos ───────────────────────────────────────────────────
+// Belum ada logo resmi — gunakan placeholder berbasis nama hingga aset tersedia.
+// Setelah logo asli ada, tambahkan field `logoUrl` dan render <Image> di komponen.
+export const PARTNERS = [
+  { name: "PT Maju Bersama" },
+  { name: "Yayasan Pendidikan Nusantara" },
+  { name: "Grand Residence Group" },
+  { name: "PT Sinar Abadi" },
+  { name: "Kementerian PUPR" },
+  { name: "PT Cipta Karya" },
 ] as const;

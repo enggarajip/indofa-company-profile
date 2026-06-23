@@ -105,7 +105,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       {/* Hero cover */}
       {coverUrl && (
-        <div className="relative aspect-[21/9] max-h-[520px] bg-neutral-200 overflow-hidden">
+        <div className="relative w-full aspect-[21/9] max-h-[520px] bg-neutral-200 overflow-hidden">
           <Image
             src={coverUrl}
             alt={project.title}

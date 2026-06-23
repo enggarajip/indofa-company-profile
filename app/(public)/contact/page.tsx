@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Mail, Phone, MapPin, Clock, ExternalLink } from "lucide-react";
 import { COMPANY } from "@/lib/config/company";
+import { ContactForm } from "@/components/public/ContactForm";
 
 export const metadata: Metadata = {
   title: "Hubungi Kami",
@@ -44,7 +44,7 @@ const CONTACT_ITEMS = [
   {
     icon:  Clock,
     label: "Jam Operasional",
-    value: "Senin – Jumat: 08.00 – 17.00 WIB\nSabtu: 08.00 – 13.00 WIB",
+    value: COMPANY.contact.operatingHours,
     href:  null,
     linkLabel: null,
   },
@@ -123,7 +123,7 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* Right: map + CTA form */}
+            {/* Right: map + contact form */}
             <div className="lg:col-span-3 space-y-6">
 
               {/* Google Maps embed */}
@@ -131,7 +131,7 @@ export default function ContactPage() {
                 <iframe
                   src={COMPANY.contact.mapsEmbed}
                   width="100%"
-                  height="380"
+                  height="320"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
@@ -140,45 +140,8 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Quick contact card */}
-              <div className="bg-white rounded-2xl border border-neutral-200 p-7 shadow-card">
-                <h3 className="text-lg font-display font-600 text-neutral-900 mb-2">
-                  Butuh Respons Cepat?
-                </h3>
-                <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-                  Untuk penanganan lebih cepat, hubungi kami langsung via WhatsApp atau telepon.
-                  Tim kami akan merespons dalam waktu maksimal 1 jam kerja.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <a
-                    href={`https://wa.me/${COMPANY.contact.whatsapp}?text=Halo%2C%20saya%20ingin%20konsultasi%20proyek%20konstruksi`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 py-3 bg-green-500 hover:bg-green-600 text-white text-sm font-600 rounded-xl transition-colors"
-                  >
-                    💬 WhatsApp
-                  </a>
-                  <a
-                    href={`tel:${COMPANY.contact.phone.replace(/\s/g, "")}`}
-                    className="flex items-center justify-center gap-2 py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-600 rounded-xl transition-colors"
-                  >
-                    <Phone size={15} /> Telepon
-                  </a>
-                </div>
-
-                <div className="mt-5 pt-5 border-t border-neutral-100">
-                  <p className="text-xs text-neutral-500 text-center">
-                    Atau kirim email ke{" "}
-                    <a
-                      href={`mailto:${COMPANY.contact.email}`}
-                      className="text-brand-600 hover:text-brand-800 font-500"
-                    >
-                      {COMPANY.contact.email}
-                    </a>
-                  </p>
-                </div>
-              </div>
+              {/* Contact form — lead capture */}
+              <ContactForm />
             </div>
           </div>
         </div>
