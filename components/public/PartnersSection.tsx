@@ -1,6 +1,14 @@
 import { Building2 } from "lucide-react";
 import { PARTNERS } from "@/lib/config/company";
 
+/*
+  ASSET DIBUTUHKAN: logo resmi tiap partner/klien (PNG/SVG, transparent background).
+  Saat ini setiap kartu memakai ikon generik Building2 dari Lucide sebagai
+  placeholder karena belum ada logo asli. Cara ganti per partner:
+  1. Tambahkan field `logoUrl` ke tipe PARTNERS di lib/config/company.ts
+  2. Render <Image src={p.logoUrl} ... /> di bawah, gantikan <Building2 />
+*/
+
 export function PartnersSection() {
   return (
     <section className="py-14 bg-neutral-50 border-y border-neutral-100">

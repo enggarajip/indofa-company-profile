@@ -117,6 +117,12 @@ export default async function HomePage() {
               </Link>
             </div>
             {/* Visual placeholder */}
+            {/*
+              ASSET DIBUTUHKAN: Foto kantor/gedung/proyek unggulan perusahaan.
+              Format: landscape, rasio ~4:3, resolusi minimal 1200x900px.
+              Cara ganti: replace blok wrapper gradient di bawah ini dengan
+              komponen Image (fill, object-cover), lalu hapus emoji dan teks placeholder.
+            */}
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 overflow-hidden">
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white/20">

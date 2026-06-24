@@ -42,6 +42,14 @@ export function TestimonialSection() {
                 &ldquo;{t.comment}&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-neutral-100">
+                {/*
+                  ASSET DIBUTUHKAN (opsional): foto profil klien, format persegi,
+                  minimal 80x80px. Saat ini avatar memakai inisial nama sebagai
+                  placeholder. Cara ganti: tambahkan field `avatarUrl` ke
+                  TESTIMONIALS di lib/config/company.ts, lalu render
+                  <Image src={t.avatarUrl} fill className="object-cover rounded-full" />
+                  di tempat <span> inisial di bawah ini.
+                */}
                 <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0">
                   <span className="text-brand-700 font-display font-700 text-sm" aria-hidden="true">
                     {t.name.charAt(0)}

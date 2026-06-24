@@ -34,24 +34,27 @@ export function Footer() {
               >
                 <span className="text-sm" aria-hidden="true">💬</span>
               </a>
-              <a
-                href={COMPANY.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 hover:scale-110 flex items-center justify-center transition-all duration-200"
-                aria-label="Instagram"
+              {/*
+                Instagram & LinkedIn sengaja dibuat non-klikable (span, bukan <a>)
+                karena perusahaan belum punya akun resmi. Setelah akun resmi
+                tersedia, ganti <span> di bawah jadi <a href={COMPANY.social.instagram}
+                target="_blank" rel="noopener noreferrer"> dan kembalikan style
+                hover yang sama seperti tombol WhatsApp di atas.
+              */}
+              <span
+                className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center cursor-not-allowed opacity-40"
+                title="Akun Instagram belum tersedia"
+                aria-label="Instagram (belum tersedia)"
               >
                 <Instagram size={16} />
-              </a>
-              <a
-                href={COMPANY.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 hover:scale-110 flex items-center justify-center transition-all duration-200"
-                aria-label="LinkedIn"
+              </span>
+              <span
+                className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center cursor-not-allowed opacity-40"
+                title="Akun LinkedIn belum tersedia"
+                aria-label="LinkedIn (belum tersedia)"
               >
                 <Linkedin size={16} />
-              </a>
+              </span>
             </div>
           </div>
 

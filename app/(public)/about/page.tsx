@@ -110,6 +110,14 @@ export default function AboutPage() {
             </div>
 
             {/* Visual */}
+            {/*
+              ASSET DIBUTUHKAN (3 foto):
+              1. Box besar atas  : foto tim/kantor — rasio 4:3, landscape.
+              2. Box kecil kiri  : foto contoh proyek gedung — rasio 1:1 (square).
+              3. Box kecil kanan : foto contoh proyek infrastruktur — rasio 1:1 (square).
+              Cara ganti: replace masing-masing wrapper gradient di bawah dengan
+              komponen Image (fill, object-cover), lalu hapus emoji placeholder-nya.
+            */}
             <div className="space-y-4">
               <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 flex items-center justify-center overflow-hidden">
                 <div className="text-center text-white/20">
