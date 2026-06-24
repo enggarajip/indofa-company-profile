@@ -19,15 +19,15 @@ export const COMPANY = {
     email:     "indofa.gk@gmail.com",
     phone:     "+62 21 5972 9980",
     whatsapp:  "6285780026999",
-    mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4079160521055!2d106.63399777499026!3d-6.20980709377804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9006f91a3bf%3A0xb64c1b4304946e32!2sPT%20Indofa%20Gemilang%20Konstruksi!5e0!3m2!1sen!2sid!4v1782205111664!5m2!1sen!2sid",
-    mapsUrl:   "https://maps.app.goo.gl/zo3cF9AZ1MkdUdrs5",
+    mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4079160052393!2d106.6365727!3d-6.2098071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9006f91a3bf%3A0xb64c1b4304946e32!2sPT%20Indofa%20Gemilang%20Konstruksi!5e0!3m2!1sen!2sid!4v1782288606409!5m2!1sen!2sid",
+    mapsUrl:   "https://maps.app.goo.gl/sCHQ482SH2NqQM4p8",
     operatingHours: "Senin – Jumat: 08.00 – 17.00 WIB\nSabtu: 08.00 – 13.00 WIB",
   },
 
   // Belum ada akun media sosial resmi tercantum di company profile.
   social: {
-    instagram: "",
-    linkedin:  "",
+    instagram: "https://instagram.com/indofagemilang",
+    linkedin:  "https://linkedin.com/company/indofagemilang",
   },
 } as const;
 
@@ -87,10 +87,10 @@ export const SERVICES = [
 ] as const;
 
 export const WHY_US = [
-  { label: "Tahun Pengalaman", value: "7+" },
-  { label: "Bidang Usaha", value: "4" },
-  { label: "Layanan Utama", value: "4" },
-  { label: "Komitmen", value: "100%" },
+  { label: "Tahun Pengalaman",  value: "9" },
+  { label: "Proyek Selesai",    value: "50+" },
+  { label: "Klien Puas",        value: "50+" },
+  { label: "Tenaga Ahli",       value: "100+" },
 ] as const;
 
 // ─── Testimonial ──────────────────────────────────────────────────────────────
@@ -114,8 +114,50 @@ export const TESTIMONIALS = [
     name:    "Hendra Gunawan",
     company: "Grand Residence Group",
     role:    "Project Owner",
-    rating:  4,
+    rating:  5,
     comment: "Kerja sama yang baik dari awal perencanaan hingga serah terima. Detail konstruksi diperhatikan dengan teliti, dan tim selalu responsif terhadap setiap pertanyaan kami.",
+  },
+  {
+    name:    "Enggar Prasetyo",
+    company: "PT Pencari Cinta Sejati",
+    role:    "CEO",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
+  },
+  {
+    name:    "Aji Darmawan",
+    company: "PT Bangun Siang Malam",
+    role:    "Manager",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
+  },
+  {
+    name:    "Rizal Maulana",
+    company: "PT Pulang Kembali",
+    role:    "Supervisor",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
+  },
+  {
+    name:    "Donita Sari",
+    company: "PT Panas Dingin",
+    role:    "General Manager",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
+  },
+  {
+    name:    "Subianto",
+    company: "PT Raja Sawit",
+    role:    "Owner",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
+  },
+  {
+    name:    "Lina Marlina",
+    company: "PT Indah Jaya",
+    role:    "Sales Manager",
+    rating:  5,
+    comment: "Tulis testimoninya di sini...",
   },
 ] as const;
 
