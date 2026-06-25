@@ -3,6 +3,8 @@ import { COMPANY } from "@/lib/config/company";
 import { getProjects } from "@/lib/actions/projects";
 import { PortfolioClient } from "./PortfolioClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Portfolio Proyek",
   description: `Lihat seluruh proyek konstruksi yang telah dikerjakan oleh ${COMPANY.name}. Gedung komersial, infrastruktur, jembatan, dan lebih banyak lagi.`,
