@@ -33,6 +33,26 @@ export const PROJECT_CATEGORIES: ProjectCategory[] = [
 
 
 // ---------------------------------------------------------------------------
+// ServiceType
+// Sesuai dengan CREATE TYPE service_type AS ENUM (...) di schema.sql
+// Berbeda dari ProjectCategory (jenis bangunan) — ini peran perusahaan
+// di proyek tersebut: Kontraktor saja, Kontraktor & Konsultan, atau
+// Maintenance Gedung.
+// ---------------------------------------------------------------------------
+
+export type ServiceType =
+  | "Kontraktor"
+  | "Kontraktor & Konsultan"
+  | "Maintenance Gedung";
+
+export const SERVICE_TYPES: ServiceType[] = [
+  "Kontraktor",
+  "Kontraktor & Konsultan",
+  "Maintenance Gedung",
+];
+
+
+// ---------------------------------------------------------------------------
 // Project
 // Cerminan persis kolom tabel projects di Supabase.
 // Kolom yang dihapus dari versi lama:
@@ -48,6 +68,7 @@ export type Project = {
   title:            string;          // TEXT NOT NULL
   slug:             string;          // TEXT NOT NULL UNIQUE
   category:         ProjectCategory; // project_category ENUM NOT NULL
+  service_type:     ServiceType | null; // service_type ENUM — nullable, proyek lama belum punya nilai ini
   description:      string | null;   // TEXT
   location:         string | null;   // TEXT — kota/provinsi
   address:          string | null;   // TEXT — alamat lengkap
@@ -72,6 +93,7 @@ export type ProjectFormData = {
   title:            string;
   slug:             string;
   category:         ProjectCategory | "";
+  service_type:     ServiceType | "";  // opsional — boleh dikosongkan
   description:      string;
   location:         string;
   address:          string;
@@ -86,6 +108,7 @@ export const EMPTY_PROJECT_FORM: ProjectFormData = {
   title:            "",
   slug:             "",
   category:         "",
+  service_type:     "",
   description:      "",
   location:         "",
   address:          "",

@@ -8,7 +8,7 @@ import { createProject, updateProject } from "@/lib/actions/projects";
 import { SingleImageUploader, MultiImageUploader } from "./ImageUploader";
 import { Toast, useToast } from "./Toast";
 import { generateSlug, cn } from "@/lib/utils";
-import { PROJECT_CATEGORIES, EMPTY_PROJECT_FORM } from "@/types";
+import { PROJECT_CATEGORIES, SERVICE_TYPES, EMPTY_PROJECT_FORM } from "@/types";
 import type { Project, ProjectFormData } from "@/types";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -130,6 +130,7 @@ export function ProjectForm({ project }: { project?: Project }) {
           title:           project.title,
           slug:            project.slug,
           category:        project.category,
+          service_type:    project.service_type    ?? "",
           description:     project.description    ?? "",
           location:        project.location        ?? "",
           address:         project.address         ?? "",
@@ -304,6 +305,25 @@ export function ProjectForm({ project }: { project?: Project }) {
                 </select>
               </Field>
             </div>
+
+            <Field
+              label="Peran Perusahaan (Service Type)"
+              htmlFor="service_type"
+              hint="Opsional — menjelaskan peran Indofa Gemilang Konstruksi di proyek ini"
+            >
+              <select
+                id="service_type"
+                value={form.service_type}
+                onChange={(e) => set("service_type", e.target.value as ProjectFormData["service_type"])}
+                className={cn("admin-input", !form.service_type ? "text-neutral-400" : "")}
+                disabled={isPending}
+              >
+                <option value="">Tidak ditentukan</option>
+                {SERVICE_TYPES.map((st) => (
+                  <option key={st} value={st}>{st}</option>
+                ))}
+              </select>
+            </Field>
 
             <Field
               label="Deskripsi Proyek"

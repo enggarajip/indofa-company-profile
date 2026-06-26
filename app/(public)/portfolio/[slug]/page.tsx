@@ -261,6 +261,15 @@ export default async function ProjectDetailPage({ params }: Props) {
                     {project.category}
                   </span>
                 </div>
+
+                {project.service_type && (
+                  <div className="pt-4">
+                    <p className="text-xs text-neutral-500 uppercase tracking-wide mb-1.5">Peran Perusahaan</p>
+                    <span className="inline-block bg-brand-700 text-white text-xs font-600 px-3 py-1 rounded-full">
+                      {project.service_type}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Google Maps */}

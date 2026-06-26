@@ -4,8 +4,8 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, X, Filter, SlidersHorizontal } from "lucide-react";
 import { ProjectCard } from "@/components/public/ProjectCard";
-import { PROJECT_CATEGORIES } from "@/types";
-import type { Project, ProjectCategory } from "@/types";
+import { PROJECT_CATEGORIES, SERVICE_TYPES } from "@/types";
+import type { Project, ProjectCategory, ServiceType } from "@/types";
 import { cn } from "@/lib/utils";
 
 const PER_PAGE = 12;
@@ -20,16 +20,18 @@ const SORT_LABELS: Record<SortOption, string> = {
 };
 
 export function PortfolioClient({ initialProjects }: { initialProjects: Project[] }) {
-  const [search,   setSearch]   = useState("");
-  const [category, setCategory] = useState<ProjectCategory | "">("");
-  const [sort,     setSort]     = useState<SortOption>("created_at_desc");
-  const [page,     setPage]     = useState(1);
+  const [search,      setSearch]      = useState("");
+  const [category,    setCategory]    = useState<ProjectCategory | "">("");
+  const [serviceType, setServiceType] = useState<ServiceType | "">("");
+  const [sort,        setSort]        = useState<SortOption>("created_at_desc");
+  const [page,        setPage]        = useState(1);
 
   const filtered = useMemo(() => {
     let list = [...initialProjects];
 
-    if (search)   list = list.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()));
-    if (category) list = list.filter((p) => p.category === category);
+    if (search)      list = list.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()));
+    if (category)    list = list.filter((p) => p.category === category);
+    if (serviceType) list = list.filter((p) => p.service_type === serviceType);
 
     switch (sort) {
       case "created_at_asc":  list.sort((a, b) => a.created_at.localeCompare(b.created_at)); break;
@@ -39,19 +41,19 @@ export function PortfolioClient({ initialProjects }: { initialProjects: Project[
     }
 
     return list;
-  }, [initialProjects, search, category, sort]);
+  }, [initialProjects, search, category, serviceType, sort]);
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paginated  = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
-  const reset = () => { setSearch(""); setCategory(""); setSort("created_at_desc"); setPage(1); };
-  const hasFilter = search || category || sort !== "created_at_desc";
+  const reset = () => { setSearch(""); setCategory(""); setServiceType(""); setSort("created_at_desc"); setPage(1); };
+  const hasFilter = search || category || serviceType || sort !== "created_at_desc";
   const isDatabaseEmpty = initialProjects.length === 0;
 
   return (
     <div>
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+      <div className="flex flex-col gap-3 mb-8">
         {/* Search */}
         <div className="relative flex-1">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
@@ -71,36 +73,57 @@ export function PortfolioClient({ initialProjects }: { initialProjects: Project[
           )}
         </div>
 
-        {/* Category */}
-        <div className="relative sm:w-48">
-          <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
-          <select
-            value={category}
-            onChange={(e) => { setCategory(e.target.value as ProjectCategory | ""); setPage(1); }}
-            className={cn(
-              "w-full pl-8 pr-4 py-2.5 border border-neutral-200 rounded-xl bg-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-colors",
-              !category && "text-neutral-400"
-            )}
-          >
-            <option value="">Semua Kategori</option>
-            {PROJECT_CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
+        {/* Filter & Sort — dibungkus flex-wrap agar tidak overflow saat filter bertambah */}
+        <div className="flex flex-wrap gap-3">
+          {/* Category */}
+          <div className="relative sm:w-48">
+            <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+            <select
+              value={category}
+              onChange={(e) => { setCategory(e.target.value as ProjectCategory | ""); setPage(1); }}
+              className={cn(
+                "w-full pl-8 pr-4 py-2.5 border border-neutral-200 rounded-xl bg-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-colors",
+                !category && "text-neutral-400"
+              )}
+            >
+              <option value="">Semua Kategori</option>
+              {PROJECT_CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
 
-        {/* Sort */}
-        <div className="relative sm:w-36">
-          <SlidersHorizontal size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
-          <select
-            value={sort}
-            onChange={(e) => { setSort(e.target.value as SortOption); setPage(1); }}
-            className="w-full pl-8 pr-4 py-2.5 border border-neutral-200 rounded-xl bg-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-colors"
-          >
-            {Object.entries(SORT_LABELS).map(([val, label]) => (
-              <option key={val} value={val}>{label}</option>
-            ))}
-          </select>
+          {/* Service Type */}
+          <div className="relative sm:w-56">
+            <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+            <select
+              value={serviceType}
+              onChange={(e) => { setServiceType(e.target.value as ServiceType | ""); setPage(1); }}
+              className={cn(
+                "w-full pl-8 pr-4 py-2.5 border border-neutral-200 rounded-xl bg-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-colors",
+                !serviceType && "text-neutral-400"
+              )}
+            >
+              <option value="">Semua Peran</option>
+              {SERVICE_TYPES.map((st) => (
+                <option key={st} value={st}>{st}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Sort */}
+          <div className="relative sm:w-36">
+            <SlidersHorizontal size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+            <select
+              value={sort}
+              onChange={(e) => { setSort(e.target.value as SortOption); setPage(1); }}
+              className="w-full pl-8 pr-4 py-2.5 border border-neutral-200 rounded-xl bg-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-colors"
+            >
+              {Object.entries(SORT_LABELS).map(([val, label]) => (
+                <option key={val} value={val}>{label}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 

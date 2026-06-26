@@ -8,6 +8,7 @@ import type {
   Project,
   ProjectFormData,
   ProjectCategory,
+  ServiceType,
   ActionResult,
 } from "@/types";
 
@@ -21,6 +22,7 @@ const SELECT_COLUMNS = `
   title,
   slug,
   category,
+  service_type,
   description,
   location,
   address,
@@ -44,6 +46,7 @@ type ProjectPayload = {
   title:           string;
   slug:            string;
   category:        ProjectCategory;
+  service_type:    ServiceType | null;
   description:     string | null;
   location:        string | null;
   address:         string | null;
@@ -125,6 +128,7 @@ function formToPayload(data: ProjectFormData): ProjectPayload {
     title:           data.title.trim(),
     slug,
     category:        data.category as ProjectCategory,
+    service_type:    data.service_type ? (data.service_type as ServiceType) : null,
     description:     data.description.trim()     || null,
     location:        data.location.trim()         || null,
     address:         data.address.trim()           || null,
@@ -184,6 +188,8 @@ function parseSupabaseError(error: { code?: string; message?: string }): string 
 export type GetProjectsOptions = {
   /** Filter berdasarkan kategori */
   category?: ProjectCategory;
+  /** Filter berdasarkan peran perusahaan (Kontraktor / Kontraktor & Konsultan / Maintenance Gedung) */
+  serviceType?: ServiceType;
   /** Hanya ambil proyek yang memiliki cover image (untuk public website) */
   withCoverOnly?: boolean;
   /** Urutan hasil: terbaru atau terlama */
@@ -212,6 +218,7 @@ export async function getProjects(
 ): Promise<ActionResult<Project[]>> {
   const {
     category,
+    serviceType,
     withCoverOnly = false,
     orderBy = "created_at_desc",
     limit,
@@ -229,6 +236,11 @@ export async function getProjects(
     // Filter kategori
     if (category) {
       query = query.eq("category", category);
+    }
+
+    // Filter peran perusahaan
+    if (serviceType) {
+      query = query.eq("service_type", serviceType);
     }
 
     // Hanya proyek yang punya foto cover

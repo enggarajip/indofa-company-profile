@@ -24,6 +24,17 @@ CREATE TYPE project_category AS ENUM (
 );
 
 
+-- ─── ENUM: SERVICE TYPE (PERAN PERUSAHAAN DI PROYEK) ──────────────────────────
+-- Berbeda dari category (jenis bangunan) — ini menjelaskan peran PT Indofa
+-- Gemilang Konstruksi pada proyek tersebut: sebagai Kontraktor saja, sebagai
+-- Kontraktor & Konsultan, atau sebagai penyedia jasa Maintenance Gedung.
+CREATE TYPE service_type AS ENUM (
+  'Kontraktor',
+  'Kontraktor & Konsultan',
+  'Maintenance Gedung'
+);
+
+
 -- ─── TABLE: PROJECTS ─────────────────────────────────────────────────────────
 CREATE TABLE projects (
   -- Primary key
@@ -33,6 +44,7 @@ CREATE TABLE projects (
   title           TEXT          NOT NULL CHECK (char_length(title) BETWEEN 3 AND 255),
   slug            TEXT          NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   category        project_category NOT NULL,
+  service_type    service_type,                  -- Nullable: proyek lama belum punya nilai ini
   description     TEXT,
 
   -- Lokasi
@@ -60,6 +72,7 @@ CREATE TABLE projects (
 -- Komentar tabel dan kolom (muncul di Supabase Table Editor)
 COMMENT ON TABLE  projects                IS 'Daftar proyek PT Indofa Gemilang Konstruksi';
 COMMENT ON COLUMN projects.slug           IS 'URL-friendly identifier, auto-generate dari title';
+COMMENT ON COLUMN projects.service_type   IS 'Peran perusahaan di proyek: Kontraktor, Kontraktor & Konsultan, atau Maintenance Gedung';
 COMMENT ON COLUMN projects.cover_image    IS 'Path relatif di Supabase Storage bucket project-media';
 COMMENT ON COLUMN projects.gallery_images IS 'Array path foto galeri di Supabase Storage';
 COMMENT ON COLUMN projects.duration       IS 'Durasi proyek dalam format bebas, contoh: 8 Bulan';
@@ -68,10 +81,11 @@ COMMENT ON COLUMN projects.google_maps_url IS 'Link Google Maps lokasi proyek';
 
 -- ─── INDEX ────────────────────────────────────────────────────────────────────
 -- Index untuk query yang sering dipakai di public website
-CREATE INDEX idx_projects_slug       ON projects (slug);
-CREATE INDEX idx_projects_category   ON projects (category);
-CREATE INDEX idx_projects_year       ON projects (year DESC);
-CREATE INDEX idx_projects_created_at ON projects (created_at DESC);
+CREATE INDEX idx_projects_slug         ON projects (slug);
+CREATE INDEX idx_projects_category     ON projects (category);
+CREATE INDEX idx_projects_service_type ON projects (service_type);
+CREATE INDEX idx_projects_year         ON projects (year DESC);
+CREATE INDEX idx_projects_created_at   ON projects (created_at DESC);
 
 
 -- ─── TRIGGER: AUTO-UPDATE updated_at ─────────────────────────────────────────
@@ -178,7 +192,7 @@ CREATE POLICY "storage: admin delete"
 -- Data contoh untuk testing. Hapus sebelum production jika tidak diperlukan.
 
 INSERT INTO projects (
-  title, slug, category, description,
+  title, slug, category, service_type, description,
   location, address, google_maps_url,
   year, duration,
   cover_image, gallery_images
@@ -187,6 +201,7 @@ INSERT INTO projects (
   'Gedung Kantor PT Maju Bersama',
   'gedung-kantor-pt-maju-bersama',
   'Gedung Komersial',
+  'Kontraktor & Konsultan',
   'Pembangunan gedung kantor 8 lantai dengan standar bangunan hijau (green building). Dilengkapi dengan sistem HVAC modern, panel surya, dan sistem pengolahan air hujan.',
   'Jakarta Selatan',
   'Jl. Sudirman No. 123, Jakarta Selatan, DKI Jakarta 12190',
@@ -200,6 +215,7 @@ INSERT INTO projects (
   'Jembatan Sungai Ciliwung Segmen 4',
   'jembatan-sungai-ciliwung-segmen-4',
   'Jembatan',
+  'Kontraktor',
   'Pembangunan jembatan beton bertulang sepanjang 120 meter dengan kapasitas beban 40 ton. Proyek ini merupakan bagian dari program normalisasi Sungai Ciliwung.',
   'Depok, Jawa Barat',
   'Jl. Margonda Raya, Depok, Jawa Barat 16424',
@@ -213,6 +229,7 @@ INSERT INTO projects (
   'Perumahan Grand Residence Bogor',
   'perumahan-grand-residence-bogor',
   'Perumahan',
+  'Kontraktor',
   'Pengembangan kawasan perumahan seluas 12 hektar dengan 240 unit hunian. Fasilitas lengkap termasuk clubhouse, kolam renang, dan area komersial.',
   'Bogor, Jawa Barat',
   'Jl. Pajajaran No. 88, Bogor, Jawa Barat 16144',
@@ -246,3 +263,41 @@ SELECT
   qual
 FROM pg_policies
 WHERE tablename = 'projects';
+
+
+-- ============================================================
+--  MIGRATION — STEP 11-3: Service Type Upgrade
+--  HANYA jalankan blok ini jika tabel projects SUDAH ADA
+--  sebelumnya (database production yang sudah berjalan).
+--  Jika baru setup dari nol, blok di atas sudah mencakup ini,
+--  jadi blok migration ini boleh dilewati / aman dijalankan dua kali.
+-- ============================================================
+
+-- 1. Buat ENUM service_type jika belum ada (aman dijalankan ulang)
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'service_type') THEN
+    CREATE TYPE service_type AS ENUM (
+      'Kontraktor',
+      'Kontraktor & Konsultan',
+      'Maintenance Gedung'
+    );
+  END IF;
+END $$;
+
+-- 2. Tambah kolom service_type ke tabel yang sudah ada (nullable —
+--    proyek lama otomatis bernilai NULL, TIDAK menyebabkan error)
+ALTER TABLE projects
+  ADD COLUMN IF NOT EXISTS service_type service_type;
+
+COMMENT ON COLUMN projects.service_type
+  IS 'Peran perusahaan di proyek: Kontraktor, Kontraktor & Konsultan, atau Maintenance Gedung';
+
+-- 3. Tambah index untuk filter di halaman /portfolio
+CREATE INDEX IF NOT EXISTS idx_projects_service_type ON projects (service_type);
+
+-- 4. Verifikasi: proyek lama harus tetap muncul dengan service_type = NULL,
+--    bukan error atau row hilang.
+SELECT id, title, category, service_type, created_at
+FROM projects
+ORDER BY created_at DESC;

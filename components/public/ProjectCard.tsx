@@ -36,6 +36,14 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.category}
           </span>
         </div>
+        {/* Service type badge — hanya tampil jika diisi (proyek lama bisa null) */}
+        {project.service_type && (
+          <div className="absolute top-3 right-3">
+            <span className="px-2.5 py-1 bg-brand-700/95 backdrop-blur-sm text-white text-xs font-600 rounded-full shadow-sm">
+              {project.service_type}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content */}
