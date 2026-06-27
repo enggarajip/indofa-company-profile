@@ -1,3 +1,8 @@
+// ===========================================================================
+// app/robots.ts
+// Base URL diambil dari COMPANY.url — tidak ada domain yang di-hardcode.
+// ===========================================================================
+
 import type { MetadataRoute } from "next";
 import { COMPANY } from "@/lib/config/company";
 
@@ -6,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow:     ["/", "/portfolio", "/about", "/contact"],
+        allow:     "/",
         disallow:  ["/admin", "/admin/", "/login"],
       },
     ],

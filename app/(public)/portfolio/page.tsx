@@ -3,15 +3,22 @@ import { COMPANY } from "@/lib/config/company";
 import { getProjects } from "@/lib/actions/projects";
 import { PortfolioClient } from "./PortfolioClient";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Portfolio Proyek",
   description: `Lihat seluruh proyek konstruksi yang telah dikerjakan oleh ${COMPANY.name}. Gedung komersial, infrastruktur, jembatan, dan lebih banyak lagi.`,
+  alternates: {
+    canonical: `${COMPANY.url}/portfolio`,
+  },
   openGraph: {
     title: `Portfolio | ${COMPANY.name}`,
     description: `Proyek-proyek unggulan ${COMPANY.name}`,
     url: `${COMPANY.url}/portfolio`,
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: COMPANY.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Portfolio | ${COMPANY.name}`,
+    description: `Proyek-proyek unggulan ${COMPANY.name}`,
   },
 };
 
@@ -29,7 +36,9 @@ export default async function PortfolioPage() {
             Proyek Kami
           </h1>
           <p className="text-white/70 max-w-xl mx-auto">
-            Lebih dari {projects.length > 0 ? projects.length : "200"} proyek konstruksi yang telah berhasil kami selesaikan di seluruh Indonesia.
+            {projects.length > 0
+              ? `${projects.length} proyek konstruksi yang telah berhasil kami selesaikan di seluruh Indonesia.`
+              : "Proyek konstruksi yang telah berhasil kami selesaikan di seluruh Indonesia."}
           </p>
         </div>
       </section>

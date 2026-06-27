@@ -1,62 +1,53 @@
+// ===========================================================================
+// lib/seo/jsonld.ts
+// Generator JSON-LD structured data (schema.org).
+// Semua data diambil dari lib/config/company.ts — tidak ada domain/data
+// yang di-hardcode di file ini.
+// ===========================================================================
+
 import { COMPANY } from "@/lib/config/company";
 import type { Project } from "@/types";
 
-// ─── Organization / LocalBusiness JSON-LD ─────────────────────────────────────
-// Dipakai di root layout agar muncul di setiap halaman publik.
-
+// ─── Organization (schema.org/Organization) ───────────────────────────────────
+// Dipasang di Home Page agar mesin pencari (Google, Bing) memahami identitas
+// resmi perusahaan: nama, website, logo, kontak, dan media sosial.
 export function organizationJsonLd() {
+  const sameAs = Object.values(COMPANY.social).filter(Boolean);
+
   return {
-    "@context":            "https://schema.org",
-    "@type":               ["Organization", "LocalBusiness", "ConstructionCompany"],
-    "@id":                 `${COMPANY.url}/#organization`,
-    name:                  COMPANY.name,
-    alternateName:         COMPANY.shortName,
-    url:                   COMPANY.url,
-    logo: {
-      "@type":             "ImageObject",
-      url:                 `${COMPANY.url}/logo.png`,
-      width:               "200",
-      height:              "200",
-    },
-    image:                 `${COMPANY.url}/og-image.jpg`,
-    description:           COMPANY.description,
-    foundingDate:          String(COMPANY.founded),
-    numberOfEmployees: {
-      "@type":             "QuantitativeValue",
-      value:               500,
-    },
+    "@context": "https://schema.org",
+    "@type":    "Organization",
+    "@id":      `${COMPANY.url}/#organization`,
+    name:       COMPANY.name,
+    alternateName: COMPANY.shortName,
+    url:        COMPANY.url,
+    logo:       `${COMPANY.url}/logo.png`,
+    image:      `${COMPANY.url}/og-image.jpg`,
+    description: COMPANY.description,
+    foundingDate: String(COMPANY.founded),
+    email:      COMPANY.contact.email,
+    telephone:  COMPANY.contact.phone,
     address: {
-      "@type":             "PostalAddress",
-      streetAddress:       "Jl. Gatot Subroto No. 45",
-      addressLocality:     "Jakarta Selatan",
-      addressRegion:       "DKI Jakarta",
-      postalCode:          "12950",
-      addressCountry:      "ID",
+      "@type":         "PostalAddress",
+      streetAddress:   COMPANY.contact.address,
+      addressCountry:  "ID",
     },
-    geo: {
-      "@type":             "GeoCoordinates",
-      latitude:            -6.23,
-      longitude:           106.82,
+    contactPoint: {
+      "@type":           "ContactPoint",
+      telephone:         COMPANY.contact.phone,
+      email:             COMPANY.contact.email,
+      contactType:       "customer service",
+      areaServed:        "ID",
+      availableLanguage: ["Indonesian"],
     },
-    contactPoint: [
-      {
-        "@type":           "ContactPoint",
-        telephone:         COMPANY.contact.phone,
-        contactType:       "customer service",
-        availableLanguage: "Indonesian",
-        areaServed:        "ID",
-      },
-    ],
-    sameAs: [
-      COMPANY.social.instagram,
-      COMPANY.social.linkedin,
-    ],
+    // Hanya disertakan jika ada akun sosial media yang terisi (filter di atas)
+    ...(sameAs.length > 0 ? { sameAs } : {}),
   };
 }
 
-// ─── Project / CreativeWork JSON-LD ───────────────────────────────────────────
-// Dipakai di halaman detail project.
-
+// ─── Project / CreativeWork (schema.org/CreativeWork) ─────────────────────────
+// Dipasang di halaman detail proyek (/portfolio/[slug]) agar mesin pencari
+// memahami proyek tersebut sebagai karya/hasil kerja perusahaan.
 export function projectJsonLd(project: Project) {
   return {
     "@context":   "https://schema.org",
@@ -78,22 +69,24 @@ export function projectJsonLd(project: Project) {
         address: project.address ?? project.location,
       },
     }),
-    keywords: [project.category, "konstruksi", "Indonesia"].join(", "),
+    keywords: [project.category, project.service_type, "konstruksi", "Indonesia"]
+      .filter(Boolean)
+      .join(", "),
   };
 }
 
-// ─── BreadcrumbList JSON-LD ───────────────────────────────────────────────────
-// Dipakai di halaman detail project untuk breadcrumb di hasil pencarian.
-
+// ─── BreadcrumbList (schema.org/BreadcrumbList) ────────────────────────────────
+// Dipasang di halaman detail proyek agar Google bisa menampilkan breadcrumb
+// (Beranda > Portfolio > Nama Proyek) langsung di hasil pencarian.
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {
     "@context":      "https://schema.org",
     "@type":         "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
-      "@type":    "ListItem",
-      position:   index + 1,
-      name:       item.name,
-      item:       item.url,
+      "@type":  "ListItem",
+      position: index + 1,
+      name:     item.name,
+      item:     item.url,
     })),
   };
 }

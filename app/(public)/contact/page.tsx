@@ -6,6 +6,9 @@ import { ContactForm } from "@/components/public/ContactForm";
 export const metadata: Metadata = {
   title: "Hubungi Kami",
   description: `Hubungi ${COMPANY.name} untuk konsultasi proyek konstruksi. Kami siap membantu Anda mewujudkan proyek impian.`,
+  alternates: {
+    canonical: `${COMPANY.url}/contact`,
+  },
   openGraph: {
     title: `Hubungi Kami | ${COMPANY.name}`,
     description: `Konsultasi gratis proyek konstruksi bersama ${COMPANY.name}.`,
