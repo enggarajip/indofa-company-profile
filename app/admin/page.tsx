@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getProjects } from "@/lib/actions/projects";
 import { FolderOpen, Plus, ArrowRight, MapPin, Calendar } from "lucide-react";
+import { getStorageUrl } from "@/lib/utils";
 import type { Project } from "@/types";
 
 // Dashboard admin harus selalu menampilkan data terbaru, bukan hasil cache statis.
@@ -38,13 +40,14 @@ function RecentRow({ project }: { project: Project }) {
   return (
     <div className="flex items-center gap-3 py-3 border-b border-neutral-100 last:border-0">
       {/* Cover thumbnail */}
-      <div className="w-10 h-10 rounded-lg bg-neutral-100 flex-shrink-0 overflow-hidden">
+      <div className="w-10 h-10 rounded-lg bg-neutral-100 flex-shrink-0 overflow-hidden relative">
         {project.cover_image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/project-media/${project.cover_image}`}
+          <Image
+            src={getStorageUrl(project.cover_image)}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="40px"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

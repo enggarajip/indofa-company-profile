@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition, useCallback, useId } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getProjects } from "@/lib/actions/projects";
 import { DeleteButton } from "@/components/admin/DeleteButton";
@@ -12,7 +13,7 @@ import {
   Plus, Search, Pencil, FolderOpen,
   MapPin, Calendar, Filter, X, Loader2
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, getStorageUrl } from "@/lib/utils";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -174,13 +175,14 @@ export default function ProjectsPage() {
                         {/* Title + thumbnail */}
                         <td className="px-5 py-3.5">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg bg-neutral-100 flex-shrink-0 overflow-hidden">
+                            <div className="w-10 h-10 rounded-lg bg-neutral-100 flex-shrink-0 overflow-hidden relative">
                               {project.cover_image ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/project-media/${project.cover_image}`}
+                                <Image
+                                  src={getStorageUrl(project.cover_image)}
                                   alt={`Foto cover proyek ${project.title}`}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
+                                  sizes="40px"
                                 />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
@@ -249,13 +251,14 @@ export default function ProjectsPage() {
               <ul className="md:hidden divide-y divide-neutral-100" aria-label="Daftar proyek">
                 {paginated.map((project) => (
                   <li key={project.id} className="p-4 flex items-start gap-3 list-none">
-                    <div className="w-12 h-12 rounded-xl bg-neutral-100 flex-shrink-0 overflow-hidden mt-0.5">
+                    <div className="w-12 h-12 rounded-xl bg-neutral-100 flex-shrink-0 overflow-hidden mt-0.5 relative">
                       {project.cover_image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/project-media/${project.cover_image}`}
+                        <Image
+                          src={getStorageUrl(project.cover_image)}
                           alt={`Foto cover proyek ${project.title}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          sizes="48px"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center" aria-hidden="true">

@@ -27,6 +27,9 @@ export function SingleImageUploader({
   const [preview,   setPreview]     = useState<string | null>(
     currentPath ? getStorageUrl(currentPath) : null
   );
+  // true = preview berasal dari createObjectURL (blob sementara, wajib unoptimized)
+  // false = preview berasal dari Supabase Storage URL (bisa dioptimasi Next Image)
+  const [isBlob,    setIsBlob]      = useState(false);
   const inputRef  = useRef<HTMLInputElement>(null);
   const dropzoneId = useId();
 
@@ -37,8 +40,9 @@ export function SingleImageUploader({
         return;
       }
       setUploading(true);
-      // Local preview segera tampil
+      // Local preview segera tampil — ini blob URL, tandai isBlob=true
       setPreview(URL.createObjectURL(file));
+      setIsBlob(true);
 
       try {
         const result = await uploadProjectImage(file, projectId);
@@ -47,20 +51,25 @@ export function SingleImageUploader({
         if (!result) {
           onError("Server tidak memberi respons. Muat ulang halaman dan coba lagi.");
           setPreview(currentPath ? getStorageUrl(currentPath) : null);
+          setIsBlob(false);
           return;
         }
 
         if (!result.success) {
           onError(result.error);
           setPreview(currentPath ? getStorageUrl(currentPath) : null);
+          setIsBlob(false);
           return;
         }
+        // Upload berhasil — path sudah tersimpan di Storage, blob tidak lagi diperlukan
+        setIsBlob(false);
         onChange(result.data.path);
       } catch (err) {
         console.error("[SingleImageUploader] Upload gagal:", err);
         setUploading(false);
         onError(`Error tak terduga saat upload: ${err instanceof Error ? err.message : String(err)}`);
         setPreview(currentPath ? getStorageUrl(currentPath) : null);
+        setIsBlob(false);
       }
     },
     [projectId, currentPath, onChange, onError]
@@ -111,7 +120,7 @@ export function SingleImageUploader({
       >
         {preview ? (
           <div className="relative w-full h-48">
-            <Image src={preview} alt={`Pratinjau ${label.toLowerCase()}`} fill className="object-cover" unoptimized />
+            <Image src={preview} alt={`Pratinjau ${label.toLowerCase()}`} fill className="object-cover" unoptimized={isBlob} />
             {uploading && (
               <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
                 <Loader2 size={24} className="animate-spin text-brand-600" aria-hidden="true" />
@@ -266,7 +275,6 @@ export function MultiImageUploader({
                 alt={`Foto galeri proyek ke-${i + 1}`}
                 fill
                 className="object-cover"
-                unoptimized
               />
               <button
                 type="button"
